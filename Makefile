@@ -4,9 +4,10 @@ PELICANOPTS=
 
 BASEDIR=$(CURDIR)/blog
 INPUTDIR=$(BASEDIR)/content
-OUTPUTDIR=$(BASEDIR)/output
-CONFFILE=$(BASEDIR)/pelicanconf.py
-PUBLISHCONF=$(BASEDIR)/publishconf.py
+BASEOUTPUTDIR=$(BASEDIR)/output
+OUTPUTDIR=$(BASEOUTPUTDIR)/blog
+CONFFILE=$(CURDIR)/pelicanconf.py
+PUBLISHCONF=$(CURDIR)/publishconf.py
 
 FTP_HOST=localhost
 FTP_USER=anonymous
@@ -63,7 +64,7 @@ help:
 	@echo 'Set the RELATIVE variable to 1 to enable relative urls                    '
 	@echo '                                                                          '
 
-html:
+html: copy_tree
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
 
 clean:
@@ -101,6 +102,9 @@ stopserver:
 publish:
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(PUBLISHCONF) $(PELICANOPTS)
 
+copy_tree :
+	python copy_tree.py $(BASEOUTPUTDIR)
+
 ssh_upload: publish
 	scp -P $(SSH_PORT) -r $(OUTPUTDIR)/* $(SSH_USER)@$(SSH_HOST):$(SSH_TARGET_DIR)
 
@@ -119,12 +123,12 @@ s3_upload: publish
 cf_upload: publish
 	cd $(OUTPUTDIR) && swift -v -A https://auth.api.rackspacecloud.com/v1.0 -U $(CLOUDFILES_USERNAME) -K $(CLOUDFILES_API_KEY) upload -c $(CLOUDFILES_CONTAINER) .
 
-publish-to-github: publish
-	ghp-import -n -m "publish-to-github from $(GIT_COMMIT_HASH)" -b blog-build $(OUTPUTDIR)
+publish-to-github: copy_tree
+	ghp-import -n -m "publish-to-github from $(GIT_COMMIT_HASH)" -b blog-build $(BASEOUTPUTDIR)
 	git push $(GITHUB_PAGES_REMOTE) blog-build:$(GITHUB_PAGES_BRANCH)
 
-publish-to-github-force: publish
-	ghp-import -n -m "publish-to-github-force from $(GIT_COMMIT_HASH)" -b blog-build $(OUTPUTDIR)
+publish-to-github-force: copy_tree
+	ghp-import -n -m "publish-to-github-force from $(GIT_COMMIT_HASH)" -b blog-build $(BASEOUTPUTDIR)
 	git push -f $(GITHUB_PAGES_REMOTE) blog-build:$(GITHUB_PAGES_BRANCH)
 
 .PHONY: html help clean regenerate serve serve-global devserver stopserver publish ssh_upload rsync_upload dropbox_upload ftp_upload s3_upload cf_upload github
