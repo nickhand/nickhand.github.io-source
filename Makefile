@@ -123,11 +123,11 @@ s3_upload: publish
 cf_upload: publish
 	cd $(OUTPUTDIR) && swift -v -A https://auth.api.rackspacecloud.com/v1.0 -U $(CLOUDFILES_USERNAME) -K $(CLOUDFILES_API_KEY) upload -c $(CLOUDFILES_CONTAINER) .
 
-publish-to-github: copy_tree
+publish-to-github:
 	ghp-import -n -m "publish-to-github from $(GIT_COMMIT_HASH)" -b blog-build $(BASEOUTPUTDIR)
 	git push $(GITHUB_PAGES_REMOTE) blog-build:$(GITHUB_PAGES_BRANCH)
 
-publish-to-github-force: copy_tree
+publish-to-github-force:
 	ghp-import -n -m "publish-to-github-force from $(GIT_COMMIT_HASH)" -b blog-build $(BASEOUTPUTDIR)
 	git push -f $(GITHUB_PAGES_REMOTE) blog-build:$(GITHUB_PAGES_BRANCH)
 
