@@ -9,6 +9,8 @@ OUTPUTDIR=$(BASEOUTPUTDIR)/blog
 CONFFILE=$(CURDIR)/pelicanconf.py
 PUBLISHCONF=$(CURDIR)/publishconf.py
 
+PORT=8001
+
 FTP_HOST=localhost
 FTP_USER=anonymous
 FTP_TARGET_DIR=/
@@ -75,9 +77,9 @@ regenerate:
 
 serve:
 ifdef PORT
-	cd $(OUTPUTDIR) && $(PY) -m pelican.server $(PORT)
+	cd $(BASEOUTPUTDIR) && $(PY) -m pelican.server $(PORT)
 else
-	cd $(OUTPUTDIR) && $(PY) -m pelican.server
+	cd $(BASEOUTPUTDIR) && $(PY) -m pelican.server
 endif
 
 serve-global:
@@ -90,9 +92,9 @@ endif
 
 devserver:
 ifdef PORT
-	$(BASEDIR)/develop_server.sh restart $(PORT)
+	bash $(CURDIR)/develop_server.sh restart $(PORT)
 else
-	$(BASEDIR)/develop_server.sh restart
+	bash $(CURDIR)/develop_server.sh restart
 endif
 
 stopserver:
