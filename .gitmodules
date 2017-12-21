@@ -1,0 +1,6 @@
+[submodule "blog/plugins/pelican-plugins"]
+	path = blog/plugins/pelican-plugins
+	url = https://github.com/getpelican/pelican-plugins
+[submodule "blog/plugins/ipynb"]
+	path = blog/plugins/ipynb
+	url = https://github.com/danielfrg/pelican-ipynb.git
