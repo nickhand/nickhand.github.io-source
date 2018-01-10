@@ -1,9 +1,13 @@
-My personal website 
-========================================
+Source for http://nickhand.github.io
+====================================
 
-This is the backend of my personal landing page, focusing on my astronomy research. The design template, entitled `Articulate` was purchased from [wrapbootstrap.com](https://wrapbootstrap.com/theme/articulate-resume-portfolio-WB0N5LC7P)
+This repository contains the source for http://nickhand.github.io/.
 
-License
-=======
+The design template for the main landing page, entitled `Articulate` was purchased from [wrapbootstrap.com](https://wrapbootstrap.com/theme/articulate-resume-portfolio-WB0N5LC7P)
 
-The directories and their contents contained here are Copyright Nick Hand, under a Single Application License from `wrapbootstrap.com.` You may not reuse anything therein without my permission.
+Blog
+====
+
+My personal blog, Offhand Remarks, is available at http://nickhand.github.io/blog.
+Its source code is contained in this repository in the `blog` directory, and it
+is statically generated using Pelican.
