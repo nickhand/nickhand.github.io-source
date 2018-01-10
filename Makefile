@@ -73,7 +73,7 @@ clean:
 	[ ! -d $(OUTPUTDIR) ] || rm -rf $(OUTPUTDIR)
 
 regenerate:
-	$(PELICAN) -r $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
+	$(PELICAN) -r $(INPUTDIR) -o $(BASEOUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
 
 serve:
 ifdef PORT
